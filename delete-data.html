@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Delete VintageTrail Data</title>
+  <style>
+    body{font-family:system-ui,sans-serif;line-height:1.6;color:#242321;max-width:680px;margin:0 auto;padding:32px 20px;background:#faf8f3}
+    label{display:block;font-weight:700;margin:24px 0 8px} textarea{width:100%;min-height:110px;box-sizing:border-box;padding:12px}
+    button{margin-top:12px;padding:12px 18px;border:0;border-radius:8px;background:#985b34;color:#fff;font-weight:700;cursor:pointer}
+    button:disabled{opacity:.55}.notice{background:#fff4d8;padding:14px;border-radius:8px}#result{font-weight:700;margin-top:16px}
+  </style>
+</head>
+<body>
+  <h1>Delete VintageTrail account data</h1>
+  <p>This page lets you permanently delete the anonymous VintageTrail account identifier and its synchronized check-ins without reinstalling the app.</p>
+  <p class="notice">In the app sidebar, choose <strong>获取网页版删除码</strong> and save the copied code. Treat it like a password. If you can still use the app, the in-app <strong>请求删除我的数据</strong> action is simpler.</p>
+  <form id="delete-form">
+    <label for="deletion-code">Data deletion code</label>
+    <textarea id="deletion-code" required autocomplete="off" spellcheck="false"></textarea>
+    <button id="submit-delete" type="submit">Permanently delete my data</button>
+  </form>
+  <p id="result" role="status" aria-live="polite"></p>
+  <p><a href="privacy.html">Privacy Policy</a></p>
+  <script>
+    const API_URL = "https://vintagetrail-api.wingsoar2023.workers.dev";
+    document.getElementById("delete-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const button = document.getElementById("submit-delete");
+      const result = document.getElementById("result");
+      if (!window.confirm("This permanently deletes the associated VintageTrail data. Continue?")) return;
+      button.disabled = true;
+      result.textContent = "Deleting…";
+      try {
+        const code = document.getElementById("deletion-code").value.trim().replace(/-/g, "+").replace(/_/g, "/");
+        const padded = code.padEnd(Math.ceil(code.length / 4) * 4, "=");
+        const identity = JSON.parse(atob(padded));
+        if (!identity.userId || !identity.accountSecret) throw new Error("Invalid deletion code");
+        const response = await fetch(`${API_URL}/api/account`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(identity)
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.error || `Delete failed: ${response.status}`);
+        document.getElementById("deletion-code").value = "";
+        result.textContent = "Deletion completed. The account identifier and synchronized check-ins have been erased.";
+      } catch (error) {
+        result.textContent = `Deletion failed: ${error.message}`;
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VintageTrail Privacy Policy</title>
+  <style>
+    body{font-family:system-ui,sans-serif;line-height:1.65;color:#242321;max-width:760px;margin:0 auto;padding:32px 20px;background:#faf8f3}
+    h1,h2{line-height:1.25} h2{margin-top:28px} .note{background:#fff4d8;padding:14px;border-radius:8px} a{color:#985b34}
+  </style>
+</head>
+<body>
+  <h1>VintageTrail Privacy Policy</h1>
+  <p><strong>Effective date:</strong> September 2, 2026</p>
+  <p>VintageTrail helps users find thrift and vintage stores and optionally record an in-person check-in. This policy explains what data the app handles and why.</p>
+
+  <h2>Data we collect</h2>
+  <p><strong>Precise location:</strong> Only after you tap the check-in button while the app is visible, VintageTrail requests a single foreground location reading to determine whether you are within 100 meters of the selected store. We do not request background location, create geofences, or continuously track you. The raw latitude and longitude are used on-device for the distance calculation and are not uploaded to our server.</p>
+  <p><strong>App-scoped identifier and check-ins:</strong> The app generates a random installation/account identifier (not an Android advertising ID, IMEI, serial number, or other hardware identifier). We send that identifier, store IDs, and check-in timestamps to our Cloudflare Worker and D1 database so your passport records can be synchronized.</p>
+  <p><strong>Purchases:</strong> Google Play processes subscription payments. VintageTrail sends the Google Play purchase token, product ID, and a one-way-obfuscated version of the app-scoped account identifier to our server, which verifies subscription status with the Google Play Developer API. Device model, manufacturer, hardware identifiers, and device fingerprints are not sent for receipt validation. We do not receive or store your card number.</p>
+  <p><strong>Community safety:</strong> If you report a haul post, we store the reported content identifier, reported username, reason, time, and your app-scoped identifier when available so the report can be reviewed and abuse can be prevented.</p>
+
+  <h2>Use, sharing, retention, and security</h2>
+  <p>We use data only to provide check-ins, subscription access, fraud prevention, support, and community moderation. Data is processed by service providers necessary to operate the app, including Cloudflare and Google Play. We do not sell personal data. Check-in/account data remains until you delete it; moderation records may be retained as needed for safety, dispute handling, and legal obligations.</p>
+
+  <h2>Your choices and deletion</h2>
+  <p>Location permission is optional and can be revoked in Android Settings. You can use store discovery without granting location, but verified check-in will be unavailable.</p>
+  <p>Inside the app, choose <strong>请求删除我的数据</strong> in the sidebar. After confirmation, the app calls our deletion endpoint to erase the corresponding user and check-in rows, anonymize the reporter identifier on retained safety records, then clears local passport data. You can also save a deletion code in the app and submit it through our <a href="delete-data.html">public web deletion page</a>. Google Play subscription and transaction records are controlled by Google and may be retained for financial/legal requirements; deleting VintageTrail data does not cancel a subscription. Manage or cancel subscriptions in Google Play.</p>
+
+  <h2>Children and changes</h2>
+  <p>VintageTrail is not directed to children under 13. We may update this policy and will change the effective date when we do.</p>
+
+  <h2>Contact</h2>
+  <p class="note"><strong>Release checklist:</strong> Replace this paragraph with the developer’s verified legal/business name, working privacy email, and mailing address before publishing, then host this page at the public HTTPS URL entered in Play Console.</p>
+  <p><a href="index.html">Return to VintageTrail</a></p>
+</body>
+</html>
